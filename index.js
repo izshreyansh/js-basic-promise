@@ -1,14 +1,16 @@
-let goals = false;
+const fs = require('fs')
 
-let isGoalsTrue = new Promise( (resolve, reject) => {
-  if(goals) {
-    resolve('Goal was achieved')
-  }
-  reject('The hypothesis was flawed.')
-  } 
-);
+const fileHandler = (fileName) => {
+  return new Promise( (resolve, reject) => {
+    fs.readFile(fileName,'utf8',(err, data) => {
+      if(err) {
+        reject(err);
+        return
+      }
+      resolve(data)
+    })
+  }); 
+}
 
-
-isGoalsTrue
-  .then( resp => console.log(resp))
-.catch(err => console.log(err))
+fileHandler('persons.json')
+.then(data => console.log(data));
